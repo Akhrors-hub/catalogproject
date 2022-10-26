@@ -9,12 +9,13 @@ const session = require('express-session');
 const passport = require('passport');
 const messages = require('express-messages');
 const config = require('./config/database');
-
+require('dotenv').config()
+console.log(process.env) // remove this after you've confirmed it is working
 
 
 
 //const DB_URI = 'mongodb://rs0:27018,rs1:27019,rs2:27020,rs3:27021,rs4:27022/test';
-mongoose.connect(config.database);
+mongoose.connect(process.env.MONGO_URL);
 let db = mongoose.connection;
 
 
