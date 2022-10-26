@@ -136,6 +136,6 @@ app.use('/users', users);
 
 
 // start server
-app.listen(3001, function(){
+app.listen(process.env.PORT, function(){
   console.log('Server started on port 3001....');
 });
