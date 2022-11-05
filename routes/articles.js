@@ -47,6 +47,7 @@ if(errors){
     article.title =req.body.title;
     article.author =req.user._id;
     article.body =req.body.body;
+    article.catogories = ["test"]
 
     console.log(req.body.body);
 
