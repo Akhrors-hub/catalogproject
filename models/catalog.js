@@ -1,9 +1,9 @@
 let mongoose= require('mongoose');
 
 
-// article schema
+// catalog schema
 
-let articleSchema = mongoose.Schema({
+let catalogSchema = mongoose.Schema({
   title:{
     type: String,
     required: true
@@ -24,4 +24,4 @@ let articleSchema = mongoose.Schema({
 
 });
 
-let Article = module.exports = mongoose.model('Article', articleSchema);
+let Catalog = module.exports = mongoose.model('Catalog', catalogSchema);

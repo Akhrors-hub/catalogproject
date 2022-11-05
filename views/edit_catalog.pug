@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1 #{title}
+    form(method='POST', action='/catalogs/edit/'+catalog._id)
+      #form-group
+        label Title:
+        input.form-control(name='title', type='text', value=catalog.title)
+      #form-group
+        label Author:
+        input.form-control(name='author', type='text', value=catalog.author)
+      #from-group
+        label Body:
+        textarea.from-control(name='body')= catalog.body
+      br
+      input.btn.btn-primary(type='submit', value='Submit')

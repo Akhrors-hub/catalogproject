@@ -39,7 +39,7 @@ console.log('Connected to server');
 const app = express();
 
 //  Bring in Models
-let Article = require('./models/article');
+let Catalog = require('./models/catalog');
 
 
 
@@ -113,7 +113,7 @@ app.get('*', function(req, res, next){
 
 // home rotue
 app.get('/', function(req, res){
-Article.find({}, function(err, articles){
+Catalog.find({}, function(err, catalogs){
   if(err){
     console.log(err);
   }else {
@@ -121,7 +121,7 @@ Article.find({}, function(err, articles){
 
   res.render('index', {
     title: 'Hello there',
-    articles: articles
+    catalogs: catalogs
     });
   }
   });
@@ -129,9 +129,9 @@ Article.find({}, function(err, articles){
 
 
 // Route files
-let articles = require('./routes/articles');
+let catalogs = require('./routes/catalogs');
 let users = require('./routes/users');
-app.use('/articles', articles);
+app.use('/catalogs', catalogs);
 app.use('/users', users);
 
 

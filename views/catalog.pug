@@ -1,0 +1,12 @@
+extends layout
+
+
+block content
+   h1= catalog.title
+   h5 Written by #{author}
+   p= catalog.body
+   hr
+   if user
+     if user.id ==catalog.author
+       a.btn.btn-default(href='/catalogs/edit/'+catalog._id) Edit
+       a.btn.btn-danger.delete-catalog(href='#', data-id=catalog._id) Delete

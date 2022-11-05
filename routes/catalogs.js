@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-//  Bring in Article Models
-let Article = require('../models/article');
+//  Bring in Catalog Models
+let Catalog = require('../models/catalog');
 
-//  Bring in Article Models
+//  Bring in Catalog Models
 let User = require('../models/user');
 
 
@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // how to add route
 router.get('/add', ensureAuthenticated, function(req, res){
-  res.render('add_article', {
-    title:'Add article'
+  res.render('add_catalog', {
+    title:'Add catalog'
   });
 });
 
@@ -37,25 +37,25 @@ req.checkBody('body','Body is required').notEmpty();
 let errors = req.validationErrors();
 
 if(errors){
-  res.render('add_article', {
-    title:'Add Article',
+  res.render('add_catalog', {
+    title:'Add Catalog',
     errors:errors
   });
 } else {
   console.log('yes , you hacked this');
-    let article = new Article();
-    article.title =req.body.title;
-    article.author =req.user._id;
-    article.body =req.body.body;
-    article.catogories = ["test"]
+    let catalog = new Catalog();
+    catalog.title =req.body.title;
+    catalog.author =req.user._id;
+    catalog.body =req.body.body;
+    catalog.catogories = ["test"]
 
     console.log(req.body.body);
 
-  article.save(function(err){
+  catalog.save(function(err){
   if(err){
     console.log(err);
   }else{
-    req.flash('success','Article added');
+    req.flash('success','Catalog added');
     res.redirect('/');
   }
   })
@@ -66,14 +66,14 @@ if(errors){
 
 // Load Edit form
 router.get('/edit/:id', ensureAuthenticated, function(req, res){
-  Article.findById(req.params.id, function(err, article){
-    if(article.author != req.user._id){
+  Catalog.findById(req.params.id, function(err, catalog){
+    if(catalog.author != req.user._id){
       req.flash('danger', 'Not Authorized');
       res.redirect('/');
     }
-    res.render('edit_article', {
-      tite:'Edit Article',
-      article: article
+    res.render('edit_catalog', {
+      tite:'Edit Catalog',
+      catalog: catalog
     });
   });
 })
@@ -81,14 +81,14 @@ router.get('/edit/:id', ensureAuthenticated, function(req, res){
 // Update Submit POST Route
 router.post('/edit/:id', function(req, res){
 console.log('yes , you hacked this');
-  let article = {};
-  article.title =req.body.title;
-  article.author =req.body.author;
-  article.body =req.body.body;
+  let catalog = {};
+  catalog.title =req.body.title;
+  catalog.author =req.body.author;
+  catalog.body =req.body.body;
   //onsole.log(req.body.body);
   let query = {_id:req.params.id}
 
-Article.update(query, article, function(err){
+Catalog.update(query, catalog, function(err){
 if(err){
   console.log(err);
 }else{
@@ -101,7 +101,7 @@ if(err){
 
 
 
-// Delete articles
+// Delete catalogs
 router.delete('/:id', function(req, res){
 if(!req.user._id){
   res.status(500).send();
@@ -111,11 +111,11 @@ if(!req.user._id){
 
   let query = {_id:req.params.id}
 
-  Article.findById(req.params.id, function(err, article){
-    if(article.author != req.user._id){
+  Catalog.findById(req.params.id, function(err, catalog){
+    if(catalog.author != req.user._id){
       res.status(500).send();
     } else {
-      Article.remove(query, function(err){
+      Catalog.remove(query, function(err){
         if(err){
           console.log(err);
         }
@@ -126,12 +126,12 @@ if(!req.user._id){
   });
 
 
-// Get Single article
+// Get Single catalog
 router.get('/:id', function(req, res){
-  Article.findById(req.params.id, function(err, article){
-    User.findById(article.author, function(err, user){
-      res.render('article', {
-        article: article,
+  Catalog.findById(req.params.id, function(err, catalog){
+    User.findById(catalog.author, function(err, user){
+      res.render('catalog', {
+        catalog: catalog,
         author: user.name
 
     });
